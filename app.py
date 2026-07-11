@@ -9,9 +9,7 @@ from pipeline import run_research_pipeline_stream
 
 app = Flask(__name__)
 
-# Job id -> queue.Queue of progress events. In-memory, single-process store.
-# Good enough for local/dev use; swap for Redis pub/sub if you scale to
-# multiple workers or processes.
+
 JOBS: dict[str, "queue.Queue"] = {}
 
 
