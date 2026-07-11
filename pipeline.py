@@ -1,11 +1,3 @@
-"""Streaming wrapper around the existing agent pipeline.
-
-This intentionally does NOT modify agents.py. It imports the same building
-blocks (build_search_agent, build_reader_agent, writer_chain, critic_chain)
-and re-runs the same four steps, but fires a callback after each step so the
-Flask app can push live progress to the browser over Server-Sent Events.
-"""
-
 from agents import build_search_agent, build_reader_agent, critic_chain, writer_chain
 
 
@@ -20,13 +12,6 @@ def _to_text(value) -> str:
 
 
 def run_research_pipeline_stream(topic: str, callback=None) -> dict:
-    """Same 4-step pipeline as run_research_pipeline, with progress events.
-
-    callback(event: dict) is called with:
-        {"step": "search" | "reader" | "writer" | "critic",
-         "status": "started" | "done",
-         "content": str | None}
-    """
     state = {}
 
     def emit(step, status, content=None):
